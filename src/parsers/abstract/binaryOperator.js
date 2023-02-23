@@ -20,13 +20,13 @@ const BinaryOperatorParser = (
         (value: [NodeType, Array<NodeType>]): NodeType =>
           value[1].length > 0
             ? {
-              name: 'binaryOperation',
-              value: value[1].reduce(
-                (a: Array<NodeType>, b: NodeType): Array<NodeType> =>
-                  a.concat(b),
-                [value[0]]
-              )
-            }
+                name: 'binaryOperation',
+                value: value[1].reduce(
+                  (a: Array<NodeType>, b: NodeType): Array<NodeType> =>
+                    a.concat(b),
+                  [value[0]]
+                )
+              }
             : value[0]
       )
       .desc(description)

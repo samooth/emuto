@@ -2,8 +2,8 @@
 
 import parse from '../parsers/parser'
 const examples = [
-  ` 0`,
-  `0 `,
+  ' 0',
+  '0 ',
   `[
 0
 ]`,

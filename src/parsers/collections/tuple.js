@@ -15,9 +15,9 @@ export default P.lazy((): ParserType => {
       ([left, right]: [NodeType, Array<NodeType>]): NodeType =>
         right.length === 1
           ? {
-            name: 'tuple',
-            value: [left, right[0]]
-          }
+              name: 'tuple',
+              value: [left, right[0]]
+            }
           : left
     )
   )

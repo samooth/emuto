@@ -11,7 +11,7 @@ export default (sourceCode: SourceCodeType): ParserReturnValueType => {
         results.index.column - 1,
         results.index.column + 9
       )
-    let error = new SyntaxError()
+    const error = new SyntaxError()
     error.lineNumber = results.index.line
     error.columnNumber = results.index.column
     error.message = `Expected ${results.expected.join(' or ')} on line ${

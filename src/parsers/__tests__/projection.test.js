@@ -115,7 +115,7 @@ describe('projection parser', () => {
 
   it('returns correct value - object projection with aliases', () => {
     expect(
-      parser.parse(`[3, 2]{ foo: bar, bar: foo { baz } }`).value
+      parser.parse('[3, 2]{ foo: bar, bar: foo { baz } }').value
     ).toMatchObject({
       name: 'objectProjection',
       value: {

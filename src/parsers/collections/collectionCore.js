@@ -52,38 +52,38 @@ const ComprehensionParser = P.lazy((): mixed => {
       const extractionPart =
         right.length === 1
           ? {
-            name: 'pipe',
-            value: {
-              left: middle,
-              right: right[0]
+              name: 'pipe',
+              value: {
+                left: middle,
+                right: right[0]
+              }
             }
-          }
           : middle
 
       const extractionPartWithOptionalCondition =
         condition.length === 1
           ? {
-            name: 'pipe',
-            value: {
-              left: extractionPart,
-              right: {
-                name: 'functionCall',
-                value: {
-                  left: {
-                    name: 'identifier',
-                    value: 'filter'
-                  },
-                  right: {
-                    name: 'lambda',
-                    value: {
-                      variable: 'input',
-                      definition: condition[0]
+              name: 'pipe',
+              value: {
+                left: extractionPart,
+                right: {
+                  name: 'functionCall',
+                  value: {
+                    left: {
+                      name: 'identifier',
+                      value: 'filter'
+                    },
+                    right: {
+                      name: 'lambda',
+                      value: {
+                        variable: 'input',
+                        definition: condition[0]
+                      }
                     }
                   }
                 }
               }
             }
-          }
           : extractionPart
 
       const mapPart = {

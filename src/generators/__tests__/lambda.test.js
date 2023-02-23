@@ -13,7 +13,7 @@ describe('lambda generator', () => {
           }
         }
       })
-    ).toEqual(`(function(input) {return 4})`)
+    ).toEqual('(function(input) {return 4})')
   })
 
   it('returns correct code', () => {
@@ -28,7 +28,7 @@ describe('lambda generator', () => {
           }
         }
       })
-    ).toEqual(`(function(input) {return 8})`)
+    ).toEqual('(function(input) {return 8})')
   })
 
   it('returns correct code', () => {
@@ -44,7 +44,7 @@ describe('lambda generator', () => {
         }
       })
     ).toEqual(
-      `(function(foobar3) {_ = _.__assign__('foobar3', foobar3, _); return 8})`
+      '(function(foobar3) {_ = _.__assign__(\'foobar3\', foobar3, _); return 8})'
     )
   })
 })

@@ -120,10 +120,10 @@ const ObjectProjectionParser = P.lazy((): mixed => {
       segments[1].length === 0
         ? segments[0]
         : {
-          type: 'RecursiveItem',
-          name: segments[0].value,
-          value: segments[1][0]
-        }
+            type: 'RecursiveItem',
+            name: segments[0].value,
+            value: segments[1][0]
+          }
   )
 
   const AliasParser = P.seq(SimpleItemParser, P.string(':').trim(crap))
@@ -179,7 +179,7 @@ const SimpleProjectionParser = P.lazy((): mixed => {
     ]): WrappedProjectionNodeType => ({
       name: 'projection',
       optional: optional.length === 1,
-      value: value
+      value
     })
   )
 

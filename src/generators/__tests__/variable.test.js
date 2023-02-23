@@ -3,15 +3,15 @@ import variable from '../variable'
 describe('variable generator', () => {
   it('null', () => {
     expect(variable({ name: 'variable', value: '$null' })).toEqual(
-      `_.get('null')`
+      '_.get(\'null\')'
     )
   })
   it('false', () => {
     expect(variable({ name: 'variable', value: '$false' })).toEqual(
-      `_.get('false')`
+      '_.get(\'false\')'
     )
   })
   it('input', () => {
-    expect(variable({ name: 'variable', value: '$' })).toEqual(`input`)
+    expect(variable({ name: 'variable', value: '$' })).toEqual('input')
   })
 })

@@ -44,5 +44,5 @@ module.exports = {
     'jest/globals': true,
     'jest': true,
   },
-  parser: 'babel-eslint',
+  parser: '@babel/eslint-parser',
 };

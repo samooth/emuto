@@ -4,20 +4,20 @@ import compile from '../compiler'
 
 const tests = [
   {
-    input: `null`,
-    output: `(function(_) { return (function(input) { return null})})`
+    input: 'null',
+    output: '(function(_) { return (function(input) { return null})})'
   },
   {
-    input: `true`,
-    output: `(function(_) { return (function(input) { return true})})`
+    input: 'true',
+    output: '(function(_) { return (function(input) { return true})})'
   },
   {
-    input: `$`,
-    output: `(function(_) { return (function(input) { return input})})`
+    input: '$',
+    output: '(function(_) { return (function(input) { return input})})'
   },
   {
-    input: `.hello`,
-    output: `(function(_) { return (function(input) { return input.hello})})`
+    input: '.hello',
+    output: '(function(_) { return (function(input) { return input.hello})})'
   }
 ]
 

@@ -6,47 +6,47 @@ import parse from '../parsers/parser'
 
 const tests = [
   {
-    sourceCode: `null`,
+    sourceCode: 'null',
     output: null
   },
   {
-    sourceCode: `true`,
+    sourceCode: 'true',
     output: true
   },
   {
-    sourceCode: `$`,
+    sourceCode: '$',
     input: true,
     output: true
   },
   {
-    sourceCode: `$`,
+    sourceCode: '$',
     input: 98,
     output: 98
   },
   {
-    sourceCode: `.bar`,
+    sourceCode: '.bar',
     input: { bar: 4, baz: 'hello' },
     output: 4
   },
   {
-    sourceCode: `.$shit`,
+    sourceCode: '.$shit',
     input: { $shit: null, baz: 'hello' },
     output: null
   },
   {
-    sourceCode: `[0.14, true, "true 2"]`,
+    sourceCode: '[0.14, true, "true 2"]',
     output: [0.14, true, 'true 2']
   },
   {
-    sourceCode: `[[false], [true, null]]`,
+    sourceCode: '[[false], [true, null]]',
     output: [[false], [true, null]]
   },
   {
-    sourceCode: `false | true`,
+    sourceCode: 'false | true',
     output: true
   },
   {
-    sourceCode: `.foo | .bar`,
+    sourceCode: '.foo | .bar',
     input: {
       foo: {
         bar: 'hello'
@@ -55,7 +55,7 @@ const tests = [
     output: 'hello'
   },
   {
-    sourceCode: `.foo | .bar | .baz`,
+    sourceCode: '.foo | .bar | .baz',
     input: {
       foo: {
         bar: {
@@ -66,7 +66,7 @@ const tests = [
     output: 'world'
   },
   {
-    sourceCode: `.apple.pear`,
+    sourceCode: '.apple.pear',
     input: {
       apple: {
         pear: 42
@@ -75,7 +75,7 @@ const tests = [
     output: 42
   },
   {
-    sourceCode: `.apple.pear.bar`,
+    sourceCode: '.apple.pear.bar',
     input: {
       apple: {
         pear: { bar: false }
@@ -84,11 +84,11 @@ const tests = [
     output: false
   },
   {
-    sourceCode: `null: true`,
+    sourceCode: 'null: true',
     output: [null, true]
   },
   {
-    sourceCode: `"Hello\\" World\\'\\nx"`,
+    sourceCode: '"Hello\\" World\\\'\\nx"',
     output: `Hello" World'
 x`
   },
@@ -106,163 +106,163 @@ x`
     }
   },
   {
-    sourceCode: `{"foo": ("bar" | "baz")}`,
+    sourceCode: '{"foo": ("bar" | "baz")}',
     output: {
       foo: 'baz'
     }
   },
   {
-    sourceCode: `{'foo': ('bar' | 'baz')}`,
+    sourceCode: '{\'foo\': (\'bar\' | \'baz\')}',
     output: {
       foo: 'baz'
     }
   },
   {
-    sourceCode: `{"foo": ("bar" | "baz")}["foo"]`,
+    sourceCode: '{"foo": ("bar" | "baz")}["foo"]',
     output: 'baz'
   },
   {
-    sourceCode: `[3, 2][0]`,
+    sourceCode: '[3, 2][0]',
     output: 3
   },
   {
-    sourceCode: `[3, 2][0] : [3, 2][1]`,
+    sourceCode: '[3, 2][0] : [3, 2][1]',
     output: [3, 2]
   },
   {
-    sourceCode: `[3, 2][0] | [3, 2][1]`,
+    sourceCode: '[3, 2][0] | [3, 2][1]',
     output: 2
   },
   {
-    sourceCode: `join " "`,
+    sourceCode: 'join " "',
     input: ['Hello', 'World'],
     output: 'Hello World'
   },
   {
-    sourceCode: `map \\" "`,
+    sourceCode: 'map \\" "',
     input: ['Hello', 'World'],
     output: [' ', ' ']
   },
   {
-    sourceCode: `~ " "`,
+    sourceCode: '~ " "',
     input: ['Hello', 'World'],
     output: [' ', ' ']
   },
   {
-    sourceCode: `{"original": $.foo} | {"new": $}`,
+    sourceCode: '{"original": $.foo} | {"new": $}',
     input: { foo: 42 },
     output: { new: { original: 42 } }
   },
   {
-    sourceCode: `map $ => {"original": $.foo} | map $=> {"new": $}`,
+    sourceCode: 'map $ => {"original": $.foo} | map $=> {"new": $}',
     input: [{ foo: 42 }, { foo: 'hello' }],
     output: [{ new: { original: 42 } }, { new: { original: 'hello' } }]
   },
   {
-    sourceCode: `~{"original": $.foo} |~ {"new": $}`,
+    sourceCode: '~{"original": $.foo} |~ {"new": $}',
     input: [{ foo: 42 }, { foo: 'hello' }],
     output: [{ new: { original: 42 } }, { new: { original: 'hello' } }]
   },
   {
-    sourceCode: `map $ => {"original": $.foo} | "foo"`,
+    sourceCode: 'map $ => {"original": $.foo} | "foo"',
     input: [{ foo: 42 }, { foo: 'hello' }],
     output: 'foo'
   },
   {
-    sourceCode: `[0,1,2][1,2][1,1][0]`,
+    sourceCode: '[0,1,2][1,2][1,1][0]',
     output: 2
   },
   {
-    sourceCode: `[0,1,"foo"][1,2][1,1][0]`,
+    sourceCode: '[0,1,"foo"][1,2][1,1][0]',
     output: 'foo'
   },
   {
-    sourceCode: `{"foo": [{"bar": "baz"}]} | $.foo[0].bar`,
+    sourceCode: '{"foo": [{"bar": "baz"}]} | $.foo[0].bar',
     output: 'baz'
   },
   {
-    sourceCode: `sortBy \\.age | map \\.name`,
+    sourceCode: 'sortBy \\.age | map \\.name',
     output: ['John', 'Mary'],
     input: [{ name: 'John', age: 11 }, { name: 'Mary', age: 33 }]
   },
   {
-    sourceCode: `8 * 3.14 / 2`,
+    sourceCode: '8 * 3.14 / 2',
     output: (8 * 3.14) / 2
   },
   {
-    sourceCode: `8 + 3.14 * 2`,
+    sourceCode: '8 + 3.14 * 2',
     output: 8 + 3.14 * 2
   },
   {
-    sourceCode: `(8 + 3.14) * 2`,
+    sourceCode: '(8 + 3.14) * 2',
     output: (8 + 3.14) * 2
   },
   {
-    sourceCode: `8 - (3.14 * 2)`,
+    sourceCode: '8 - (3.14 * 2)',
     output: 8 - 3.14 * 2
   },
   {
-    sourceCode: `8314 % 34 -3`,
+    sourceCode: '8314 % 34 -3',
     output: (8314 % 34) - 3
   },
   {
-    sourceCode: `3 * 2 -1 <= -1.34 * 3`,
+    sourceCode: '3 * 2 -1 <= -1.34 * 3',
     output: 3 * 2 - 1 <= -1.34 * 3
   },
   {
-    sourceCode: `3 * 2 -1 < -1.34 * 3`,
+    sourceCode: '3 * 2 -1 < -1.34 * 3',
     output: 3 * 2 - 1 < -1.34 * 3
   },
   {
-    sourceCode: `3 * 2 -1 >= -1.34 * 3`,
+    sourceCode: '3 * 2 -1 >= -1.34 * 3',
     output: 3 * 2 - 1 >= -1.34 * 3
   },
   {
-    sourceCode: `3 * 2 -1 > -1.34 * 3`,
+    sourceCode: '3 * 2 -1 > -1.34 * 3',
     output: 3 * 2 - 1 > -1.34 * 3
   },
   {
-    sourceCode: `3 * 2 -1 == -1.34 * 3`,
+    sourceCode: '3 * 2 -1 == -1.34 * 3',
     output: 3 * 2 - 1 === -1.34 * 3
   },
   {
-    sourceCode: `3 * 2 -1 != -1.34 * 3`,
+    sourceCode: '3 * 2 -1 != -1.34 * 3',
     output: 3 * 2 - 1 !== -1.34 * 3
   },
   {
-    sourceCode: `"1" == 1`,
+    sourceCode: '"1" == 1',
     output: '1' === 1
   },
   {
-    sourceCode: `3 * 2 -1 > -1.34 * 3 || true`,
+    sourceCode: '3 * 2 -1 > -1.34 * 3 || true',
     output: 3 * 2 - 1 > -1.34 * 3 || true
   },
   {
-    sourceCode: `3 * 2 -1 > -1.34 * 3 || false`,
+    sourceCode: '3 * 2 -1 > -1.34 * 3 || false',
     output: 3 * 2 - 1 > -1.34 * 3 || false
   },
   {
-    sourceCode: `3 * 2 -1 > -1.34 * 3 && false`,
+    sourceCode: '3 * 2 -1 > -1.34 * 3 && false',
     output: 3 * 2 - 1 > -1.34 * 3 && false
   },
   {
-    sourceCode: `3 * 2 -1 > -1.34 * 3 && true`,
+    sourceCode: '3 * 2 -1 > -1.34 * 3 && true',
     output: 3 * 2 - 1 > -1.34 * 3 && true
   },
   {
-    sourceCode: `-(3 * 2) -1 > -1.34 * 3 && true`,
+    sourceCode: '-(3 * 2) -1 > -1.34 * 3 && true',
     output: -(3 * 2) - 1 > -1.34 * 3 && true
   },
   {
-    sourceCode: `+(3 * 2) -1 > -1.34 * 3 && true`,
+    sourceCode: '+(3 * 2) -1 > -1.34 * 3 && true',
     output: +(3 * 2) - 1 > -1.34 * 3 && true
   },
   {
-    sourceCode: `!(3 * 2 -1 > -1.34 * 3) && true`,
+    sourceCode: '!(3 * 2 -1 > -1.34 * 3) && true',
     output: !(3 * 2 - 1 > -1.34 * 3) && true
   },
   {
-    sourceCode: `!(3 * .foo -1 > -1.34 * .bar) && true`,
+    sourceCode: '!(3 * .foo -1 > -1.34 * .bar) && true',
     input: {
       foo: 2,
       bar: 3
@@ -270,7 +270,7 @@ x`
     output: !(3 * 2 - 1 > -1.34 * 3) && true
   },
   {
-    sourceCode: `filter $ => .age >= 18 | map $ => .name`,
+    sourceCode: 'filter $ => .age >= 18 | map $ => .name',
     input: [
       { name: 'John', age: 17 },
       { name: 'Mary', age: 18 },
@@ -280,88 +280,88 @@ x`
     output: ['Mary', 'Gabe']
   },
   {
-    sourceCode: `3 * 2 -1 > -1.34 * 3 or true`,
+    sourceCode: '3 * 2 -1 > -1.34 * 3 or true',
     output: 3 * 2 - 1 > -1.34 * 3 || true
   },
   {
-    sourceCode: `!(3 * 2 -1 > -1.34 * 3) and true`,
+    sourceCode: '!(3 * 2 -1 > -1.34 * 3) and true',
     output: !(3 * 2 - 1 > -1.34 * 3) && true
   },
   {
-    sourceCode: `3 + $foobar where $foobar = 4`,
+    sourceCode: '3 + $foobar where $foobar = 4',
     output: 7
   },
   {
-    sourceCode: `(3 + $foobar | [$, $foobar]) where $foobar = $`,
+    sourceCode: '(3 + $foobar | [$, $foobar]) where $foobar = $',
     input: 4,
     output: [7, 4]
   },
   {
-    sourceCode: `($x + $foobar | [$, $foobar]) where $x = 3 $foobar = ($x + 1)`,
+    sourceCode: '($x + $foobar | [$, $foobar]) where $x = 3 $foobar = ($x + 1)',
     input: 4,
     output: [7, 4]
   },
   {
-    sourceCode: `([1] | map $foo | $[0]) where $foo = ($ => 4)`,
+    sourceCode: '([1] | map $foo | $[0]) where $foo = ($ => 4)',
     output: 4
   },
   {
-    sourceCode: `([1] | foo 4) where $foo = ($ => $ => 4)`,
+    sourceCode: '([1] | foo 4) where $foo = ($ => $ => 4)',
     output: 4
   },
   {
-    sourceCode: `([1, 2] | foo) where $foo = $reverse`,
+    sourceCode: '([1, 2] | foo) where $foo = $reverse',
     output: [2, 1]
   },
   {
-    sourceCode: `map $foo => [$foo]`,
+    sourceCode: 'map $foo => [$foo]',
     input: [1, 2],
     output: [[1], [2]]
   },
   {
-    sourceCode: `reduce ($a => $b => $a + $b): 0`,
+    sourceCode: 'reduce ($a => $b => $a + $b): 0',
     input: [1, 2, -1, 3],
     output: 5
   },
   {
-    sourceCode: `[1, ...$, 3, ...$]`,
+    sourceCode: '[1, ...$, 3, ...$]',
     input: [1, 2],
     output: [1, 1, 2, 3, 1, 2]
   },
   {
-    sourceCode: `{"foo": 3} | {"bar": "baz", ...$}`,
+    sourceCode: '{"foo": 3} | {"bar": "baz", ...$}',
     output: {
       foo: 3,
       bar: 'baz'
     }
   },
   {
-    sourceCode: `$.uno?.dos?.tres`,
+    sourceCode: '$.uno?.dos?.tres',
     input: {
       uno: {}
     },
     output: null
   },
   {
-    sourceCode: `$?[3]`,
+    sourceCode: '$?[3]',
     input: undefined,
     output: null
   },
   {
-    sourceCode: `$?[3]`,
+    sourceCode: '$?[3]',
     input: [1, 2, 3],
     output: null
   },
   {
-    sourceCode: `3 + 4 if 2 <= 3 else -12`,
+    sourceCode: '3 + 4 if 2 <= 3 else -12',
     output: 7
   },
   {
-    sourceCode: `3 : 4 if null else [-12] | [$[0]]`,
+    sourceCode: '3 : 4 if null else [-12] | [$[0]]',
     output: [-12]
   },
   {
-    sourceCode: `[each .author.name in .articles sortBy $ => .author.age]`,
+    sourceCode: '[each .author.name in .articles sortBy $ => .author.age]',
     input: {
       articles: [
         { author: { age: 3, name: 'Jonas' } },
@@ -372,7 +372,7 @@ x`
     output: ['Jonas', 'Mary', 'Johnny']
   },
   {
-    sourceCode: `[each .author.age in .articles reverse]`,
+    sourceCode: '[each .author.age in .articles reverse]',
     input: {
       articles: [
         { author: { age: 3, name: 'Jonas' } },
@@ -383,7 +383,7 @@ x`
     output: [33, 34, 3]
   },
   {
-    sourceCode: `[each .author.age in .articles]`,
+    sourceCode: '[each .author.age in .articles]',
     input: {
       articles: [
         { author: { age: 3, name: 'Jonas' } },
@@ -394,7 +394,7 @@ x`
     output: [3, 34, 33]
   },
   {
-    sourceCode: `[each .author.name in .articles if .author.age >= 30 sortBy $ => .author.age]`,
+    sourceCode: '[each .author.name in .articles if .author.age >= 30 sortBy $ => .author.age]',
     input: {
       articles: [
         { author: { age: 3, name: 'Jones' } },
@@ -405,49 +405,49 @@ x`
     output: ['Mary', 'John']
   },
   {
-    sourceCode: `{each $: (length) in $}`,
+    sourceCode: '{each $: (length) in $}',
     input: ['bo', 'boo'],
     output: { bo: 2, boo: 3 }
   },
   {
-    sourceCode: `$[1:3]`,
+    sourceCode: '$[1:3]',
     input: [1, 2, 3, 4],
     output: [2, 3]
   },
   {
-    sourceCode: `[0, ..."Hello"]`,
+    sourceCode: '[0, ..."Hello"]',
     output: [0, 'H', 'e', 'l', 'l', 'o']
   },
   {
-    sourceCode: `[...$foo] where $foo = "Hello"`,
+    sourceCode: '[...$foo] where $foo = "Hello"',
     output: ['H', 'e', 'l', 'l', 'o']
   },
   {
-    sourceCode: `error "Hello" if false else "asdfgb"`,
+    sourceCode: 'error "Hello" if false else "asdfgb"',
     output: 'asdfgb'
   },
   {
-    sourceCode: `[($ => error "asd" | "f")]`,
+    sourceCode: '[($ => error "asd" | "f")]',
     output: ['f']
   },
   {
-    sourceCode: `((3))`,
+    sourceCode: '((3))',
     output: 3
   },
   {
-    sourceCode: `( ((3)))`,
+    sourceCode: '( ((3)))',
     output: 3
   },
   {
-    sourceCode: `[[]]`,
+    sourceCode: '[[]]',
     output: [[]]
   },
   {
-    sourceCode: `[[[]]]`,
+    sourceCode: '[[[]]]',
     output: [[[]]]
   },
   {
-    sourceCode: `[ [  [ [  [ ] ]]]  ]`,
+    sourceCode: '[ [  [ [  [ ] ]]]  ]',
     output: [[[[[]]]]]
   },
   {
@@ -549,7 +549,7 @@ x`
     }
   },
   {
-    sourceCode: `$ {...x} where $x = ($ => {"y": 0})`,
+    sourceCode: '$ {...x} where $x = ($ => {"y": 0})',
     input: null,
     output: { y: 0 }
   },
@@ -621,7 +621,7 @@ x`
     }
   },
   {
-    sourceCode: `map ($key => $value => ($key + "_") : ("_" + $value))`,
+    sourceCode: 'map ($key => $value => ($key + "_") : ("_" + $value))',
     input: {
       a: 'b',
       c: 'd',
@@ -634,7 +634,7 @@ x`
     }
   },
   {
-    sourceCode: `{ "Joe": 13, "Marie": 14 } | map ($key => $value => "Age of " + $key : $value)`,
+    sourceCode: '{ "Joe": 13, "Marie": 14 } | map ($key => $value => "Age of " + $key : $value)',
     input: null,
     output: {
       'Age of Joe': 13,
@@ -642,39 +642,39 @@ x`
     }
   },
   {
-    sourceCode: `['{"foo": "bar"}'] | parseJSON`,
+    sourceCode: '[\'{"foo": "bar"}\'] | parseJSON',
     input: null,
     output: {
       foo: 'bar'
     }
   },
   {
-    sourceCode: `{...$}`,
+    sourceCode: '{...$}',
     input: { foo: 'bar' },
     output: { foo: 'bar' }
   },
   {
-    sourceCode: `{...$, "x": 4}`,
+    sourceCode: '{...$, "x": 4}',
     input: { foo: 'bar' },
     output: { foo: 'bar', x: 4 }
   },
   {
-    sourceCode: `[...$]`,
+    sourceCode: '[...$]',
     input: [0, 1, 2],
     output: [0, 1, 2]
   },
   {
-    sourceCode: `[...$, 4, ...$]`,
+    sourceCode: '[...$, 4, ...$]',
     input: [0, 1, 2],
     output: [0, 1, 2, 4, 0, 1, 2]
   },
   {
-    sourceCode: `[{...$}]`,
+    sourceCode: '[{...$}]',
     input: { foo: 'bar' },
     output: [{ foo: 'bar' }]
   },
   {
-    sourceCode: `update {'x': 3.14, 'deps': {'react': '4.5'}}`,
+    sourceCode: 'update {\'x\': 3.14, \'deps\': {\'react\': \'4.5\'}}',
     input: {
       deps: {
         react: '6. 5'
@@ -693,7 +693,7 @@ x`
 
 describe('interpreter', () => {
   it('handles errors correctly', () => {
-    expect((): mixed => execute(`error "x"`)()).toThrow('x')
+    expect((): mixed => execute('error "x"')()).toThrow('x')
   })
 
   tests.forEach(
@@ -720,15 +720,15 @@ describe('interpreter', () => {
     }
   )
 
-  it(`allow passing single variable`, () => {
+  it('allow passing single variable', () => {
     expect(execute('$foo')(null, { foo: 3 })).toEqual(3)
   })
 
-  it(`allow passing multiple variables`, () => {
+  it('allow passing multiple variables', () => {
     expect(execute('$foo + $bar')(null, { foo: 4, bar: -2 })).toEqual(2)
   })
 
-  it(`doesn't allow passing functions`, () => {
+  it('doesn\'t allow passing functions', () => {
     expect((): mixed =>
       execute('foo 4')(null, { foo: (x: ?mixed): number => 3 })
     ).toThrow()

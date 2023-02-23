@@ -1,21 +1,27 @@
 // @flow
 
 import combinations from 'combinations-generator'
-import { product } from 'cartesian-product-generator'
-import type { ObjectProjectionItemType } from './types'
+import {
+  product
+} from 'cartesian-product-generator'
+import type {
+  ObjectProjectionItemType
+} from './types'
 import merge from 'lodash.merge'
 
-type ProjectableType = Array<mixed> & { [string]: mixed };
+type ProjectableType = Array<mixed> & {
+    [string]: mixed
+};
 type ProjectionRuleType = number & string;
-type ProjectionRulesType = Array<ProjectionRuleType>;
+type ProjectionRulesType = Array<ProjectionRuleType> ;
 type ProjectableObjectType = {
-  [string]: ProjectableObjectType
+    [string]: ProjectableObjectType
 };
 
-const convertUndefined = (value: ?mixed): mixed | null =>
+const convertUndefined = (value: ? mixed): mixed | null =>
   value === undefined ? null : value
 
-const handleOptional = (value: ?mixed, f: mixed => mixed): mixed =>
+const handleOptional = (value: ? mixed, f: mixed => mixed): mixed =>
   convertUndefined(value) === null ? null : f(value)
 
 const length = (input: Array<mixed> | Object): number =>
@@ -23,15 +29,20 @@ const length = (input: Array<mixed> | Object): number =>
 
 const parseJSON = JSON.parse
 
-const objectify = (input: Array<[string, mixed]>): { [string]: mixed } =>
+const objectify = (input: Array<[string, mixed]>): {
+        [string]: mixed
+    } =>
   input.reduce(function (
-    a: { [string]: mixed },
+    a: {
+            [string]: mixed
+        },
     b: [string, mixed]
-  ): { [string]: mixed } {
+  ): {
+        [string]: mixed
+    } {
     a[b[0]] = b[1]
     return a
-  },
-  {})
+  }, {})
 
 const handleProjectionItem = (
   projectable: ProjectableType
@@ -126,11 +137,11 @@ export default {
     Array.isArray(input)
       ? input.map(f)
       : objectify(
-        // eslint-disable-next-line standard/array-bracket-even-spacing
+        // eslint-disable-next-line no-use-before-define
         Object.entries(input).map(([key, value]: any): any => f(key)(value))
       ),
 
-  sortBy: (f: <T>(mixed) => T): ((Array<mixed>) => Array<mixed>) => (
+  sortBy: (f: < T > (mixed) => T): ((Array<mixed>) => Array<mixed>) => (
     input: Array<mixed>
   ): Array<mixed> =>
     input
@@ -141,8 +152,12 @@ export default {
 
   has: (
     key: string | number
-  ): ((Array<mixed> | { [mixed]: mixed }) => boolean) => (
-    input: Array<mixed> | { [mixed]: mixed }
+  ): ((Array<mixed> | {
+        [mixed]: mixed
+    }) => boolean) => (
+    input: Array<mixed> | {
+            [mixed]: mixed
+        }
   ): boolean => key in input,
 
   filter: (f: mixed => boolean): ((Array<mixed>) => Array<mixed>) => (
@@ -156,25 +171,37 @@ export default {
   __assign__: function (
     variable: string,
     value: mixed,
-    context: { [string]: mixed }
-  ): { [string]: mixed } {
-    return Object.assign({}, context, { [variable]: value })
+    context: {
+            [string]: mixed
+        }
+  ): {
+        [string]: mixed
+    } {
+    return Object.assign({}, context, {
+      [variable]: value
+    })
   },
 
   reverse: (input: Array<mixed>): Array<mixed> => input.slice().reverse(),
 
   reduce: ([f, x]: [(mixed) => mixed => mixed, mixed]): ((
-    Array<mixed>
-  ) => mixed) => (input: Array<mixed>): mixed =>
+            Array<mixed>
+        ) => mixed) => (input: Array<mixed>): mixed =>
     input.reduce((a: mixed, b: mixed): mixed => f(a)(b), x),
 
   length,
   size: length,
 
-  keys: (input: { [string]: mixed }): Array<string> => Object.keys(input),
+  keys: (input: {
+        [string]: mixed
+    }): Array<string> => Object.keys(input),
 
-  values: (input: { [string]: mixed }): Array<mixed> => Object.values(input),
-  entries: (input: { [string]: mixed }): Array<[string, mixed]> =>
+  values: (input: {
+        [string]: mixed
+    }): Array<mixed> => Object.values(input),
+  entries: (input: {
+            [string]: mixed
+        }): Array<[string, mixed]> =>
     Object.entries(input),
 
   combinations: (r: number): Array<mixed> | (string => Array<Array<mixed>>) => (

@@ -29,12 +29,12 @@ export default P.lazy((): ParserType => {
       rest.length === 0
         ? tuple
         : {
-          name: 'ternary',
-          value: {
-            left: tuple,
-            middle: rest[0][0],
-            right: rest[0][1]
+            name: 'ternary',
+            value: {
+              left: tuple,
+              middle: rest[0][0],
+              right: rest[0][1]
+            }
           }
-        }
   )
 })
